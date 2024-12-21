@@ -76,4 +76,21 @@ class CompetitionController extends Controller
             'competition' => $competition
         ], 200);  
     }
+
+    public function deleteCompetition($id)
+    {
+        $competition = Competition::find($id);
+
+        if (!$competition) {
+            return response()->json([
+                'message' => 'competition not found'
+            ], 404); 
+        }
+
+        $competition->delete();
+        
+        return response()->json([
+            'message' => 'competition deleted successfully'
+        ], 200);  
+    }
 }
