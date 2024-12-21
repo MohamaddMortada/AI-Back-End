@@ -13,6 +13,6 @@ Route::post('/users', [UsersController::class,'setUser']);
 Route::put('/users/{id}', [UsersController::class, 'updateUser']);
 Route::delete('/users/{id}', [UsersController::class, 'deleteUser']);
 
-Route::get('/events', [EventController::class,'getEvents']);
-Route::get('/events/{id}', [EventController::class,'getEvent']);
-Route::post('/events', [EventController::class,'setEvent']);
+Route::get('/event', [EventController::class,'getEvents']);
+Route::get('/event/{id}', [EventController::class,'getEvent']);
+Route::post('/event', [EventController::class,'setEvent']);
