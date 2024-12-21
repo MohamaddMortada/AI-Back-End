@@ -9,3 +9,4 @@ use App\Http\Controllers\UsersController;
 Route::get('/users', [UsersController::class,'getUsers']);
 Route::get('/users/{id}', [UsersController::class,'getUser']);
 Route::post('/users', [UsersController::class,'setUser']);
+Route::put('/users/{id}', [UsersController::class, 'updateUser']);
