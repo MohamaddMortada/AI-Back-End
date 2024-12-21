@@ -3,33 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class UserController extends Controller
+class UsersController extends Controller
 {
     public function getUsers(){
         $users = Users::all();
         if(!$users){
             return response()->json([
-                'could not find any user'
-            ]);
+                'message' => 'No users found'
+            ],404);
         }
         return response()->json([
-            'successfuly found all',
-            $users
-        ]);
+            'message' => 'Successfully fetched all users',
+            'users' => $users
+        ],200);
     }
 
     public function getUser($id){
         $user = Users::find($id);
         if(!$user){
             return response()->json([
-                'could not find user'
-            ]);
+                'message' => 'User not found'
+            ],404);
         }
         return response()->json([
-            'successfuly found',
-            $user
-        ]);
+            'message' => 'User found successfully',
+            'user' => $user
+        ],200);
     }
     public function setUser(Request $request){
         $user = Users::create([
@@ -40,10 +41,10 @@ class UserController extends Controller
             'gender' => $request->input('gender'),
         ]);
         if(!$user)   
-            return response()->json(['error while creating user']);
+            return response()->json(['error while creating user'],404);
         return response()->json([
-            'successfuly created',
-            $user
-        ]);
+            'message' => 'User created successfully',
+            'user' => $user
+        ],200);
     }
 }
