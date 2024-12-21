@@ -18,4 +18,17 @@ class UserController extends Controller
             $users
         ]);
     }
+
+    public function getUser($id){
+        $user = Users::find($id);
+        if(!$user){
+            return response()->json([
+                'could not find user'
+            ]);
+        }
+        return response()->json([
+            'successfuly found',
+            $user
+        ]);
+    }
 }
