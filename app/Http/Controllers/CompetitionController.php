@@ -50,4 +50,30 @@ class CompetitionController extends Controller
             'competition' => $competition
         ],201);
     }
+
+    public function updateCompetition(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'date' => 'sometimes|required|date'
+        ]);
+
+        $competition = Competition::find($id);
+
+        if (!$competition) {
+            return response()->json([
+                'message' => 'competition not found'
+            ], 404);
+        }
+
+        $competition->name = $request->input('name');
+        $competition->date = $request->input('date');
+
+        $competition->save();
+
+        return response()->json([
+            'message' => 'competition updated successfully',
+            'competition' => $competition
+        ], 200);  
+    }
 }
