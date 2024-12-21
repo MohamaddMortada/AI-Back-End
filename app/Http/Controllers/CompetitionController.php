@@ -21,7 +21,7 @@ class CompetitionController extends Controller
     } 
 
     public function getCompetition($id){
-        $competition = competition::find($id);
+        $competition = Competition::find($id);
         if(!$competition){
             return response()->json([
                 'message' => 'competition not found'
@@ -39,7 +39,7 @@ class CompetitionController extends Controller
             'date' => 'required|string|max:255',
         ]);
 
-        $competition = competition::create([
+        $competition = Competition::create([
             'name' => $request->input('name'),
             'date' => $request->input('date'),
         ]);
