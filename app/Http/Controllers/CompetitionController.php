@@ -32,4 +32,22 @@ class CompetitionController extends Controller
             'competition' => $competition
         ],200);
     }
+
+    public function setCompetition(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'date' => 'required|string|max:255',
+        ]);
+
+        $competition = competition::create([
+            'name' => $request->input('name'),
+            'date' => $request->input('date'),
+        ]);
+        if(!$competition)   
+            return response()->json(['message' => 'Error while creating competition'], 500);
+        return response()->json([
+            'message' => 'competition created successfully',
+            'competition' => $competition
+        ],201);
+    }
 }
