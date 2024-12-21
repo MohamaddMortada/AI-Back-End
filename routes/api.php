@@ -19,5 +19,5 @@ Route::get('/event/{id}', [EventController::class,'getEvent']);
 Route::post('/event', [EventController::class,'setEvent']);
 
 
-Route::get('/competition', [CompetitionController::class,'getcompetitions']);
-Route::get('/competition/{id}', [CompetitionController::class,'getcompetition']);
+Route::get('/competition', [CompetitionController::class,'getCompetitions']);
+Route::get('/competition/{id}', [CompetitionController::class,'getCompetition']);
