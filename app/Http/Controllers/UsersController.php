@@ -57,4 +57,35 @@ class UsersController extends Controller
             'user' => $user
         ],201);
     }
+
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $validatedData = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|email|unique:users,email,' . $id,
+            'password' => 'sometimes|required|string|min:6',
+            'age' => 'sometimes|required|integer',
+            'gender' => 'sometimes|required|string|in:male,female,other',
+        ]);
+
+        $user->update($validatedData);
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
+        }
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user
+        ], 200);  
+    }
 }
