@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CompetitionController;
 
 
 
@@ -16,3 +17,6 @@ Route::delete('/users/{id}', [UsersController::class, 'deleteUser']);
 Route::get('/event', [EventController::class,'getEvents']);
 Route::get('/event/{id}', [EventController::class,'getEvent']);
 Route::post('/event', [EventController::class,'setEvent']);
+
+
+Route::get('/competition', [CompetitionController::class,'getcompetitions']);
