@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\EventController;
 
 
 
@@ -12,3 +13,4 @@ Route::post('/users', [UsersController::class,'setUser']);
 Route::put('/users/{id}', [UsersController::class, 'updateUser']);
 Route::delete('/users/{id}', [UsersController::class, 'deleteUser']);
 
+Route::get('/events', [EventController::class,'getEvents']);
