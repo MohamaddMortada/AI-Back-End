@@ -14,3 +14,4 @@ Route::put('/users/{id}', [UsersController::class, 'updateUser']);
 Route::delete('/users/{id}', [UsersController::class, 'deleteUser']);
 
 Route::get('/events', [EventController::class,'getEvents']);
+Route::get('/events/{id}', [EventController::class,'getEvent']);
