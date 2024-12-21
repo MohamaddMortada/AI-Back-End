@@ -23,3 +23,4 @@ Route::get('/competition', [CompetitionController::class,'getCompetitions']);
 Route::get('/competition/{id}', [CompetitionController::class,'getCompetition']);
 Route::post('/competition', [CompetitionController::class,'setCompetition']);
 Route::put('/competition/{id}', [CompetitionController::class,'updateCompetition']);
+Route::delete('/competition/{id}', [CompetitionController::class,'deleteCompetition']);
