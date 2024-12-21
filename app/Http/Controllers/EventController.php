@@ -31,4 +31,22 @@ class EventController extends Controller
             'event' => $event
         ],200);
     }
+
+    public function setEvent(Request $request){
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'wr_holder' => 'required|string|max:255',
+        ]);
+
+        $event = Event::create([
+            'name' => $request->input('name'),
+            'wr_holder' => $request->input('wr_holder'),
+        ]);
+        if(!$event)   
+            return response()->json(['message' => 'Error while creating event'], 500);
+        return response()->json([
+            'message' => 'event created successfully',
+            'event' => $event
+        ],201);
+    }
 }
