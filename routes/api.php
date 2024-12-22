@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\PredictionController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\StatisticsController;
 
 
 
@@ -40,3 +41,5 @@ Route::get('/feedback/{id}', [FeedbackController::class,'getFeedback']);
 Route::post('/feedback', [FeedbackController::class,'setFeedback']);
 Route::put('/feedback/{id}', [FeedbackController::class,'updateFeedback']);
 Route::delete('/feedback/{id}', [FeedbackController::class,'deleteFeedback']);
+
+Route::get('/Statistics', [StatisticsController::class,'getStatistics']);
