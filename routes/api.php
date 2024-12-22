@@ -37,3 +37,4 @@ Route::delete('/prediction/{id}', [PredictionController::class,'deletePrediction
 
 Route::get('/feedback', [FeedbackController::class,'getFeedbacks']);
 Route::get('/feedback/{id}', [FeedbackController::class,'getFeedback']);
+Route::post('/feedback', [FeedbackController::class,'setFeedback']);
