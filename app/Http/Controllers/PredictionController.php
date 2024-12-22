@@ -18,4 +18,17 @@ class PredictionController extends Controller
             'predictions' => $predictions
         ],200);
     }
+
+    public function getPrediction($id){
+        $prediction = Prediction::find($id);
+        if(!$prediction){
+            return response()->json([
+                'message' => 'prediction not found'
+            ],404);
+        }
+        return response()->json([
+            'message' => 'prediction found successfully',
+            'prediction' => $prediction
+        ],200);
+    }
 }
