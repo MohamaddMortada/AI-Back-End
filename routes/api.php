@@ -32,3 +32,4 @@ Route::get('/prediction', [PredictionController::class,'getPredictions']);
 Route::get('/prediction/{id}', [PredictionController::class,'getPrediction']);
 Route::post('/prediction', [PredictionController::class,'setPrediction']);
 Route::put('/prediction/{id}', [PredictionController::class,'updatePrediction']);
+Route::delete('/prediction/{id}', [PredictionController::class,'deletePrediction']);
