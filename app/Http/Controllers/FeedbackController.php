@@ -18,4 +18,18 @@ class FeedbackController extends Controller
             'feedbacks' => $feedbacks
         ],200);
     }
+
+    public function getFeedback($id){
+        $feedback = Feedback::find($id);
+        if(!$feedback){
+            return response()->json([
+                'message' => 'feedback not found'
+            ],404);
+        }
+        return response()->json([
+            'message' => 'feedback found successfully',
+            'feedback' => $feedback
+        ],200);
+    }
+
 }
