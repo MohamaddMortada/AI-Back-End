@@ -6,6 +6,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\PredictionController;
+use App\Http\Controllers\FeedbackController;
 
 
 
@@ -33,3 +34,5 @@ Route::get('/prediction/{id}', [PredictionController::class,'getPrediction']);
 Route::post('/prediction', [PredictionController::class,'setPrediction']);
 Route::put('/prediction/{id}', [PredictionController::class,'updatePrediction']);
 Route::delete('/prediction/{id}', [PredictionController::class,'deletePrediction']);
+
+Route::get('/feedback', [FeedbackController::class,'getFeedbacks']);
