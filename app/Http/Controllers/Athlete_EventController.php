@@ -42,7 +42,7 @@ class Athlete_EventController extends Controller
         ]);
 
         $athlete_event = Athlete_Event::create([
-            'event' => $request->input('event'),
+            'result' => $request->input('result'),
             'event_id' => $request->input('event_id'),
             'competition_id' => $request->input('competition_id'),
             'user_id' => $request->input('user_id'),

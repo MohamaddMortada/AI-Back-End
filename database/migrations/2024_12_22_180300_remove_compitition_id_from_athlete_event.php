@@ -12,12 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('athlete_event', function (Blueprint $table) {
-            $table->unsignedBigInteger('compitition_id'); 
-            $table->foreign('compitition_id')
-                  ->references('id') 
-                  ->on('compititions')
-                  ->onDelete('cascade') 
-                  ->onUpdate('cascade');
+            $table->dropForeign(['compitition_id']);
+            $table->dropColumn('compitition_id');
         });
     }
 
@@ -27,8 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('athlete_event', function (Blueprint $table) {
-            $table->dropForeign(['competition_id']); 
-            $table->dropColumn('competition_id');
+            //
         });
     }
 };
