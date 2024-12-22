@@ -52,3 +52,4 @@ Route::delete('/statistics/{id}', [StatisticsController::class,'deleteStat']);
 Route::get('/athlete_event', [StatisticsController::class,'getAthlete_Events']);
 Route::get('/athlete_event/{id}', [StatisticsController::class,'getAthlete_Event']);
 Route::post('/athlete_event', [StatisticsController::class,'setAthlete_Event']);
+Route::put('/athlete_event/{id}', [StatisticsController::class,'updateAthlete_Event']);
