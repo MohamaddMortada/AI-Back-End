@@ -83,4 +83,21 @@ class Athlete_EventController extends Controller
             'athlete_event' => $athlete_event
         ], 200);  
     }
+
+    public function deleteAthlete_Event($id)
+    {
+        $athlete_event = Athlete_Event::find($id);
+
+        if (!$athlete_event) {
+            return response()->json([
+                'message' => 'athlete_event not found'
+            ], 404); 
+        }
+
+        $athlete_event->delete();
+        
+        return response()->json([
+            'message' => 'athlete_event deleted successfully'
+        ], 200);  
+    }
 }
