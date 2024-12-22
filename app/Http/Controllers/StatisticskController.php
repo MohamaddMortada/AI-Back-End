@@ -19,4 +19,17 @@ class StatisticskController extends Controller
             'statistics' => $statistics
         ],200);
     }
+    public function getStat($id){
+        $stat = Statistics::find($id);
+        if(!$stat){
+            return response()->json([
+                'message' => 'stat not found'
+            ],404);
+        }
+        return response()->json([
+            'message' => 'stat found successfully',
+            'stat' => $stat
+        ],200);
+    }
+
 }
