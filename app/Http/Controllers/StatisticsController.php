@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Statistics;
 
-class StatisticskController extends Controller
+class StatisticsController extends Controller
 {
     public function getStatistics(){
         $statistics = Statistics::all();
