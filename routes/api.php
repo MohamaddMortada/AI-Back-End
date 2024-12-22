@@ -10,11 +10,17 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\Athlete_EventController;
 use App\Http\Controllers\AuthController;
-
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-
-Route::middleware('auth:api')->get('/user', [AuthController::class, 'getUser']);
+ 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    Route::post('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:api')->name('logout');
+    Route::post('/refresh', [AuthController::class, 'refresh'])->middleware('auth:api')->name('refresh');
+    Route::post('/me', [AuthController::class, 'me'])->middleware('auth:api')->name('me');
+});
 
 Route::get('/users', [UsersController::class,'getUsers']);
 Route::get('/users/{id}', [UsersController::class,'getUser']);
