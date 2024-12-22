@@ -39,3 +39,4 @@ Route::get('/feedback', [FeedbackController::class,'getFeedbacks']);
 Route::get('/feedback/{id}', [FeedbackController::class,'getFeedback']);
 Route::post('/feedback', [FeedbackController::class,'setFeedback']);
 Route::put('/feedback', [FeedbackController::class,'updateFeedback']);
+Route::delete('/feedback', [FeedbackController::class,'deleteFeedback']);
