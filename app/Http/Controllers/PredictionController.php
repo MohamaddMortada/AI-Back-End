@@ -32,15 +32,15 @@ class PredictionController extends Controller
         ],200);
     }
 
-    public function setprediction(Request $request){
+    public function setPrediction(Request $request){
         $request->validate([
-            'name' => 'required|string|max:255',
+            'score' => 'required|string|max:255',
             'confidence' => 'required|integer',
             'user_id' => 'required|exists:users,id'
         ]);
 
         $prediction = prediction::create([
-            'name' => $request->input('name'),
+            'score' => $request->input('score'),
             'confidence' => $request->input('confidence'),
             'user_id' => $request->input('user_id'),
         ]);
@@ -50,5 +50,33 @@ class PredictionController extends Controller
             'message' => 'prediction created successfully',
             'prediction' => $prediction
         ],201);
+    }
+
+    public function updatePrediction(Request $request, $id)
+    {
+        $request->validate([
+            'score' => 'sometimes|required|string|max:255',
+            'confidence' => 'sometimes|required|integer',
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $prediction = Prediction::find($id);
+
+        if (!$prediction) {
+            return response()->json([
+                'message' => 'prediction not found'
+            ], 404);
+        }
+
+        $prediction->score = $request->input('score');
+        $prediction->confidence = $request->input('confidence');
+        $prediction->user_id = $request->input('user_id');
+
+        $prediction->save();
+
+        return response()->json([
+            'message' => 'prediction updated successfully',
+            'prediction' => $prediction
+        ], 200);  
     }
 }
