@@ -46,3 +46,4 @@ Route::get('/Statistics', [StatisticsController::class,'getStatistics']);
 Route::get('/Statistics/{id}', [StatisticsController::class,'getStat']);
 Route::post('/Statistics', [StatisticsController::class,'setStat']);
 Route::put('/Statistics/{id}', [StatisticsController::class,'updateStat']);
+Route::delete('/Statistics/{id}', [StatisticsController::class,'deleteStat']);
