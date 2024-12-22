@@ -30,3 +30,4 @@ Route::delete('/competition/{id}', [CompetitionController::class,'deleteCompetit
 
 Route::get('/prediction', [PredictionController::class,'getPredictions']);
 Route::get('/prediction/{id}', [PredictionController::class,'getPrediction']);
+Route::post('/prediction', [PredictionController::class,'setPrediction']);
