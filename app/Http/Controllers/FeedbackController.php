@@ -83,4 +83,21 @@ class FeedbackController extends Controller
             'feedback' => $feedback
         ], 200);  
     }
+
+    public function deleteFeedback($id)
+    {
+        $feedback = Feedback::find($id);
+
+        if (!$feedback) {
+            return response()->json([
+                'message' => 'feedback not found'
+            ], 404); 
+        }
+
+        $feedback->delete();
+        
+        return response()->json([
+            'message' => 'feedback deleted successfully'
+        ], 200);  
+    }
 }
