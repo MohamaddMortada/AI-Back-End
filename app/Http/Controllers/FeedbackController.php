@@ -54,4 +54,33 @@ class FeedbackController extends Controller
         ],201);
     }
 
+    public function updateFeedback(Request $request, $id)
+    {
+        $request->validate([
+            'issue' => 'sometimes|required|string|max:255',
+            'recomendation' => 'sometimes|required|string|max:255',
+            'error' => 'required|integer',
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $feedback = Feedback::find($id);
+
+        if (!$feedback) {
+            return response()->json([
+                'message' => 'feedback not found'
+            ], 404);
+        }
+
+        $feedback->issue = $request->input('issue');
+        $feedback->recomendation = $request->input('recomendation');
+        $feedback->error = $request->input('error');
+        $feedback->user_id = $request->input('user_id');
+
+        $feedback->save();
+
+        return response()->json([
+            'message' => 'feedback updated successfully',
+            'feedback' => $feedback
+        ], 200);  
+    }
 }
