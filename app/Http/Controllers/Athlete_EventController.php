@@ -31,4 +31,26 @@ class Athlete_EventController extends Controller
             'athlete_event' => $athlete_event
         ],200);
     }
+
+    public function setAthlete_Event(Request $request){
+        $request->validate([
+            'result' => 'required|string|max:255',
+            'event_id' => 'required|exists:events,id',
+            'competition_id' => 'required|exists:competitions,id',
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $athlete_event = Athlete_Event::create([
+            'event' => $request->input('event'),
+            'event_id' => $request->input('event_id'),
+            'competition_id' => $request->input('competition_id'),
+            'user_id' => $request->input('user_id'),
+        ]);
+        if(!$athlete_event)   
+            return response()->json(['message' => 'Error while creating athlete_event'], 500);
+        return response()->json([
+            'message' => 'athlete_event created successfully',
+            'athlete_event' => $athlete_event
+        ],201);
+    }
 }
