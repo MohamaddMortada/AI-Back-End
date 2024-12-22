@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Athlete_Event;
 
 class Athlete_EventController extends Controller
 {

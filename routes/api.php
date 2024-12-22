@@ -8,6 +8,7 @@ use App\Http\Controllers\CompetitionController;
 use App\Http\Controllers\PredictionController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\Athlete_EventController;
 
 
 
@@ -47,3 +48,5 @@ Route::get('/statistics/{id}', [StatisticsController::class,'getStat']);
 Route::post('/statistics', [StatisticsController::class,'setStat']);
 Route::put('/statistics/{id}', [StatisticsController::class,'updateStat']);
 Route::delete('/statistics/{id}', [StatisticsController::class,'deleteStat']);
+
+Route::get('/athlete_event', [StatisticsController::class,'getAthlete_Events']);
