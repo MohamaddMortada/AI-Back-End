@@ -40,7 +40,7 @@ class PredictionController extends Controller
             'user_id' => 'required|exists:users,id'
         ]);
 
-        $prediction = prediction::create([
+        $prediction = Prediction::create([
             'score' => $validatedData['score'],
             'confidence' => $validatedData['confidence'],
             'user_id' => $validatedData['user_id'],
