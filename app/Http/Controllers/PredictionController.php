@@ -34,16 +34,16 @@ class PredictionController extends Controller
     }
 
     public function setPrediction(Request $request){
-        $request->validate([
+        $validatedData = $request->validate([
             'score' => 'required|string|max:255',
             'confidence' => 'required|integer',
             'user_id' => 'required|exists:users,id'
         ]);
 
         $prediction = prediction::create([
-            'score' => $request->input('score'),
-            'confidence' => $request->input('confidence'),
-            'user_id' => $request->input('user_id'),
+            'score' => $validatedData['score'],
+            'confidence' => $validatedData['confidence'],
+            'user_id' => $validatedData['user_id'],
         ]);
         if(!$prediction)   
             return response()->json(['message' => 'Error while creating prediction'], 500);
