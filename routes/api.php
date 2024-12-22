@@ -43,3 +43,4 @@ Route::put('/feedback/{id}', [FeedbackController::class,'updateFeedback']);
 Route::delete('/feedback/{id}', [FeedbackController::class,'deleteFeedback']);
 
 Route::get('/Statistics', [StatisticsController::class,'getStatistics']);
+Route::get('/Statistics/{id}', [StatisticsController::class,'getStat']);
