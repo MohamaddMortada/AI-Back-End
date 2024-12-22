@@ -32,4 +32,23 @@ class StatisticskController extends Controller
         ],200);
     }
 
+    public function setStat(Request $request){
+        $request->validate([
+            'result' => 'required|string|max:255',
+            'competition_id' => 'required|exists:competitions,id',
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $stat = Statistics::create([
+            'result' => $request->input('result'),
+            'competition_id' => $request->input('competition_id'),
+            'user_id' => $request->input('user_id'),
+        ]);
+        if(!$stat)   
+            return response()->json(['message' => 'Error while creating stat'], 500);
+        return response()->json([
+            'message' => 'stat created successfully',
+            'stat' => $stat
+        ],201);
+    }
 }
