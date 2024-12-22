@@ -53,4 +53,34 @@ class Athlete_EventController extends Controller
             'athlete_event' => $athlete_event
         ],201);
     }
+
+    public function updateAthlete_Event(Request $request, $id)
+    {
+        $request->validate([
+            'result' => 'required|string|max:255',
+            'event_id' => 'required|exists:events,id',
+            'competition_id' => 'required|exists:competitions,id',
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $athlete_event = Athlete_Event::find($id);
+
+        if (!$athlete_event) {
+            return response()->json([
+                'message' => 'athlete_event not found'
+            ], 404);
+        }
+
+        $athlete_event->result = $request->input('result');
+        $athlete_event->event_id = $request->input('event_id');
+        $athlete_event->competition_id = $request->input('competition_id');
+        $athlete_event->user_id = $request->input('user_id');
+
+        $athlete_event->save();
+
+        return response()->json([
+            'message' => 'athlete_event updated successfully',
+            'athlete_event' => $athlete_event
+        ], 200);  
+    }
 }
