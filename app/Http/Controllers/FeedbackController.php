@@ -32,4 +32,26 @@ class FeedbackController extends Controller
         ],200);
     }
 
+    public function setFeedback(Request $request){
+        $request->validate([
+            'issue' => 'required|string|max:255',
+            'recomendation' => 'required|string|max:255',
+            'error' => 'required|integer',
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $feedback = Feedback::create([
+            'issue' => $request->input('issue'),
+            'recomendation' => $request->input('recomendation'),
+            'error' => $request->input('error'),
+            'user_id' => $request->input('user_id'),
+        ]);
+        if(!$feedback)   
+            return response()->json(['message' => 'Error while creating feedback'], 500);
+        return response()->json([
+            'message' => 'feedback created successfully',
+            'feedback' => $feedback
+        ],201);
+    }
+
 }
