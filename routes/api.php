@@ -9,8 +9,12 @@ use App\Http\Controllers\PredictionController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\Athlete_EventController;
+use App\Http\Controllers\AuthController;
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
 
+Route::middleware('auth:api')->get('/user', [AuthController::class, 'getUser']);
 
 Route::get('/users', [UsersController::class,'getUsers']);
 Route::get('/users/{id}', [UsersController::class,'getUser']);
