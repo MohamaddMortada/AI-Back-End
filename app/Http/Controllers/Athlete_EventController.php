@@ -18,4 +18,17 @@ class Athlete_EventController extends Controller
             'athlete_events' => $athlete_events
         ],200);
     }
+
+    public function getAthlete_Event($id){
+        $athlete_event = Athlete_Event::find($id);
+        if(!$athlete_event){
+            return response()->json([
+                'message' => 'athlete_event not found'
+            ],404);
+        }
+        return response()->json([
+            'message' => 'athlete_event found successfully',
+            'athlete_event' => $athlete_event
+        ],200);
+    }
 }
