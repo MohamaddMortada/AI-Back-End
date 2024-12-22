@@ -79,4 +79,20 @@ class PredictionController extends Controller
             'prediction' => $prediction
         ], 200);  
     }
+    public function deletePrediction($id)
+    {
+        $prediction = Prediction::find($id);
+
+        if (!$prediction) {
+            return response()->json([
+                'message' => 'prediction not found'
+            ], 404); 
+        }
+
+        $prediction->delete();
+        
+        return response()->json([
+            'message' => 'prediction deleted successfully'
+        ], 200);  
+    }
 }
