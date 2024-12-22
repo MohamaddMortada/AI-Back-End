@@ -42,8 +42,8 @@ Route::post('/feedback', [FeedbackController::class,'setFeedback']);
 Route::put('/feedback/{id}', [FeedbackController::class,'updateFeedback']);
 Route::delete('/feedback/{id}', [FeedbackController::class,'deleteFeedback']);
 
-Route::get('/Statistics', [StatisticsController::class,'getStatistics']);
-Route::get('/Statistics/{id}', [StatisticsController::class,'getStat']);
-Route::post('/Statistics', [StatisticsController::class,'setStat']);
-Route::put('/Statistics/{id}', [StatisticsController::class,'updateStat']);
-Route::delete('/Statistics/{id}', [StatisticsController::class,'deleteStat']);
+Route::get('/statistics', [StatisticsController::class,'getStatistics']);
+Route::get('/statistics/{id}', [StatisticsController::class,'getStat']);
+Route::post('/statistics', [StatisticsController::class,'setStat']);
+Route::put('/statistics/{id}', [StatisticsController::class,'updateStat']);
+Route::delete('/statistics/{id}', [StatisticsController::class,'deleteStat']);
