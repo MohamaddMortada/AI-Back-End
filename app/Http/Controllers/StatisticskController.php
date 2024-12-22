@@ -51,4 +51,32 @@ class StatisticskController extends Controller
             'stat' => $stat
         ],201);
     }
+
+    public function updateStat(Request $request, $id)
+    {
+        $request->validate([
+            'result' => 'required|string|max:255',
+            'competition_id' => 'required|exists:competitions,id',
+            'user_id' => 'required|exists:users,id'
+        ]);
+
+        $stat = Statistics::find($id);
+
+        if (!$stat) {
+            return response()->json([
+                'message' => 'stat not found'
+            ], 404);
+        }
+
+        $stat->result = $request->input('result');
+        $stat->competition_id = $request->input('competition_id');
+        $stat->user_id = $request->input('user_id');
+
+        $stat->save();
+
+        return response()->json([
+            'message' => 'stat updated successfully',
+            'stat' => $stat
+        ], 200);  
+    }
 }
