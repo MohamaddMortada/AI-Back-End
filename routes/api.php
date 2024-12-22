@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\CompetitionController;
+use App\Http\Controllers\PredictionController;
 
 
 
@@ -26,3 +27,5 @@ Route::get('/competition/{id}', [CompetitionController::class,'getCompetition'])
 Route::post('/competition', [CompetitionController::class,'setCompetition']);
 Route::put('/competition/{id}', [CompetitionController::class,'updateCompetition']);
 Route::delete('/competition/{id}', [CompetitionController::class,'deleteCompetition']);
+
+Route::get('/prediction', [PredictionController::class,'getPredictions']);
