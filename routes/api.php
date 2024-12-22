@@ -50,3 +50,4 @@ Route::put('/statistics/{id}', [StatisticsController::class,'updateStat']);
 Route::delete('/statistics/{id}', [StatisticsController::class,'deleteStat']);
 
 Route::get('/athlete_event', [StatisticsController::class,'getAthlete_Events']);
+Route::get('/athlete_event/{id}', [StatisticsController::class,'getAthlete_Event']);
