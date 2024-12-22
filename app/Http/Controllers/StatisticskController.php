@@ -79,4 +79,21 @@ class StatisticskController extends Controller
             'stat' => $stat
         ], 200);  
     }
+
+    public function deleteStat($id)
+    {
+        $stat = Statistics::find($id);
+
+        if (!$stat) {
+            return response()->json([
+                'message' => 'stat not found'
+            ], 404); 
+        }
+
+        $stat->delete();
+        
+        return response()->json([
+            'message' => 'stat deleted successfully'
+        ], 200);  
+    }
 }
