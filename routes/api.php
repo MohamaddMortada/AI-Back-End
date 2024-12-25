@@ -11,6 +11,7 @@ use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\Athlete_EventController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PointsCalculatorController;
+use App\Http\Controllers\DetectController;
 
  
 Route::group([
@@ -73,3 +74,5 @@ Route::put('/athlete_event/{id}', [Athlete_EventController::class,'updateAthlete
 Route::delete('/athlete_event/{id}', [Athlete_EventController::class,'deleteAthlete_Event']);
 
 Route::post('/points', [PointsCalculatorController::class,'getPoints']);
+
+Route::post('/detect', [DetectController::class, 'detectImage']);
