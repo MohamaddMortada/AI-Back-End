@@ -97,7 +97,16 @@ angles_users_pose, angles_correct_pose = calculate_pose_angles(users_pose, corre
 print("Angles for the Users Pose:")
 for angle_name, angle_value in angles_users_pose.items():
     print(f"{angle_name}: {angle_value:.2f}°")
+    user_angle = angle_value
 
 print("\nAngles for the Correct Pose:")
 for angle_name, angle_value in angles_correct_pose.items():
     print(f"{angle_name}: {angle_value:.2f}°")
+    correct_angle = angle_value
+
+def calculate_error_percentage(correct_angle, user_angle):
+    error_percentage = (abs(correct_angle - user_angle) / correct_angle) * 100
+    return error_percentage
+
+error = calculate_error_percentage(correct_angle, user_angle)
+print(f"Error Percentage: {error:.2f}%")
