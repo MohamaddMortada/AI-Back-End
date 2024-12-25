@@ -10,6 +10,8 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\Athlete_EventController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PointsCalculatorController;
+
  
 Route::group([
     'prefix' => 'auth'
@@ -69,3 +71,5 @@ Route::get('/athlete_event/{id}', [Athlete_EventController::class,'getAthlete_Ev
 Route::post('/athlete_event', [Athlete_EventController::class,'setAthlete_Event']);
 Route::put('/athlete_event/{id}', [Athlete_EventController::class,'updateAthlete_Event']);
 Route::delete('/athlete_event/{id}', [Athlete_EventController::class,'deleteAthlete_Event']);
+
+Route::post('/points', [PointsCalculatorController::class,'getPoints']);
