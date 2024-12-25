@@ -73,8 +73,8 @@ correct_pose = [
 ]
 def calculate_angle(p1, p2, p3):
 
-    v1 = np.array([p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]])
-    v2 = np.array([p3[0] - p2[0], p3[1] - p2[1], p3[2] - p2[2]])
+    v1 = np.array([p2[0] - p1[0], p2[1] - p1[1]])
+    v2 = np.array([p3[0] - p2[0], p3[1] - p2[1]])
     
     cosine_angle = np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
     
@@ -87,8 +87,8 @@ def calculate_pose_angles(users_pose, correct_pose):
     angles_users_pose = {}
     angles_correct_pose = {}
     
-    angles_users_pose["Shoulder-Elbow-Wrist"] = calculate_angle(users_pose[12], users_pose[14], users_pose[16])
-    angles_correct_pose["Shoulder-Elbow-Wrist"] = calculate_angle(correct_pose[12], correct_pose[14], correct_pose[16])
+    angles_users_pose["Shoulder-Elbow-Wrist"] = calculate_angle(users_pose[27], users_pose[25], users_pose[23])
+    angles_correct_pose["Shoulder-Elbow-Wrist"] = calculate_angle(correct_pose[27], correct_pose[25], correct_pose[23])
     
     return angles_users_pose, angles_correct_pose
 
