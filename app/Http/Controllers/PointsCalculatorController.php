@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class PointsCalculatorController extends Controller
 {
@@ -26,9 +27,16 @@ class PointsCalculatorController extends Controller
                 'message' => 'error fetching data'
             ],404);
         }
+
         $performancePoints = $response->json()['performancePoints'] ?? null;
+
+        if ($performancePoints === null) {
+            return response()->json([
+                'message' => 'Performance points not found in the API response.',
+            ], 404);
+        }
         return response()->json([
             'Performance Points' => $performancePoints
-        ],201);
+        ],200);
     }
 }
