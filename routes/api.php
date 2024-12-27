@@ -12,6 +12,7 @@ use App\Http\Controllers\Athlete_EventController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PointsCalculatorController;
 use App\Http\Controllers\DetectController;
+use App\Http\Controllers\LiveDetectionController;
 
  
 Route::group([
@@ -76,3 +77,5 @@ Route::delete('/athlete_event/{id}', [Athlete_EventController::class,'deleteAthl
 Route::post('/points', [PointsCalculatorController::class,'getPoints']);
 
 Route::post('/detect', [DetectController::class, 'detectImage']);
+
+Route::post('/livedetect', [LiveDetectionController::class, 'runScript']);
