@@ -55,6 +55,12 @@ def detect_pose():
         ankleLeft = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x, landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
         angles['left_leg'] = calculate_angle(hipLeft, kneeLeft, ankleLeft)
 
+        hipRight = [landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].x, landmarks[mp_pose.PoseLandmark.RIGHT_HIP.value].y]
+        kneeRight = [landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].x, landmarks[mp_pose.PoseLandmark.RIGHT_KNEE.value].y]
+        ankleRight = [landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE.value].x, landmarks[mp_pose.PoseLandmark.RIGHT_ANKLE .value].y]
+        angles['right_leg'] = calculate_angle(hipRight, kneeRight, ankleRight)
+
+
         return jsonify(angles)
     
     return jsonify({'error': 'No pose landmarks detected'}), 400
