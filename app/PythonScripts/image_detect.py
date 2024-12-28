@@ -21,6 +21,7 @@ def calculate_angle(a, b, c):
         
     return angle 
 
+@app.route('/detect_image', methods=['POST'])
 
 def detect_pose():
     if 'image' not in request.files:
