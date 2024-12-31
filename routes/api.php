@@ -76,6 +76,6 @@ Route::delete('/athlete_event/{id}', [Athlete_EventController::class,'deleteAthl
 
 Route::post('/points', [PointsCalculatorController::class,'getPoints']);
 
-Route::post('/detect', [DetectController::class, 'detectImage']);
-
+Route::post('/detect_image', [DetectController::class, 'detectImage']);
+Route::post('/detect_video', [DetectController::class, 'detectVideo']);
 Route::post('/livedetect', [LiveDetectionController::class, 'runScript']);
