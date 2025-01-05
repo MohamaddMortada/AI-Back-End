@@ -13,6 +13,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PointsCalculatorController;
 use App\Http\Controllers\DetectController;
 use App\Http\Controllers\LiveDetectionController;
+use App\Http\Controllers\EventDetectorController;
+
 
  
 Route::group([
