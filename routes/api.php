@@ -13,7 +13,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PointsCalculatorController;
 use App\Http\Controllers\DetectController;
 use App\Http\Controllers\LiveDetectionController;
-use App\Http\Controllers\EventDetectorController;
 
 
  
@@ -82,3 +81,4 @@ Route::post('/detect_image', [DetectController::class, 'detectImage']);
 Route::post('/detect_video', [DetectController::class, 'detectVideo']);
 
 Route::post('/livedetect', [LiveDetectionController::class, 'runScript']);
+

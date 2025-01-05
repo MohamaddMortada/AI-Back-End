@@ -94,4 +94,5 @@ class EventController extends Controller
             'message' => 'event deleted successfully'
         ], 200);  
     }
+    
 }
