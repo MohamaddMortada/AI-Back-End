@@ -19,7 +19,7 @@ class DetectController extends Controller {
 
             $response = Http::attach(
                 'image', file_get_contents($file), $file->getClientOriginalName()
-            )->post('http://10.0.2.2:5000/detect_image');
+            )->post('http://127.0.0.1:5000/start_image');
 
             if ($response->successful()) {
                 return response()->json([
@@ -51,7 +51,7 @@ class DetectController extends Controller {
 
             $response = Http::attach(
                 'video', file_get_contents($file), $file->getClientOriginalName()
-            )->post('http://10.0.2.2:5000/detect_video');
+            )->post('http://127.0.0.1:5000/detect_video');
 
             if ($response->successful()) {
                 return response()->json([
