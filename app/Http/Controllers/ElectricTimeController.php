@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\ElectricTime;
+use Carbon\Carbon;
+
 
 
 class ElectricTimeController extends Controller
@@ -55,5 +57,45 @@ class ElectricTimeController extends Controller
     
         return response()->json(['error' => 'Invalid sync key'], 400);
     }
-    
+
+    public function stop(Request $request)
+{
+    $session = ElectricTime::where('sync_key', $request->sync_key)->first();
+
+    if ($session) {
+        $stopTime = now();  
+        
+        $session->update(['stop_time' => $stopTime]);
+        
+        $startTime = \Carbon\Carbon::parse($session->start_time); 
+
+        $stopMinutes = $stopTime->minute;
+        $stopSeconds = $stopTime->second;
+        $stopMicroseconds = $stopTime->microsecond;
+
+        $stopInSeconds = ($stopMinutes * 60) + $stopSeconds + ($stopMicroseconds / 1000000);
+
+        $startMinutes = $startTime->minute;
+        $startSeconds = $startTime->second;
+        $startMicroseconds = $startTime->microsecond;
+
+        $startInSeconds = ($startMinutes * 60) + $startSeconds + ($startMicroseconds / 1000000);
+
+        $diffInSeconds = $stopInSeconds - $startInSeconds;
+
+        return response()->json([
+            'startmin' => $startMinutes,
+            'startsec' => $startSeconds,
+            'startmicro' => $startMicroseconds,
+            'stopmin' => $stopMinutes,
+            'stopsec' => $stopSeconds,
+            'stopmicro' => $stopMicroseconds,
+            'diff' => $diffInSeconds
+        ], 200);
+    }
+
+    return response()->json(['error' => 'Invalid sync key'], 400);
+}
+
+
 }

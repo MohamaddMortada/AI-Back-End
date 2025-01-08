@@ -84,3 +84,4 @@ Route::post('/detect_video', [DetectController::class, 'detectVideo']);
 Route::post('/livedetect', [LiveDetectionController::class, 'runScript']);
 
 Route::post('/start', [ElectricTimeController::class, 'start']);
+Route::post('/stop', [ElectricTimeController::class, 'stop']);
