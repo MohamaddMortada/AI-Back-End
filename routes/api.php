@@ -13,6 +13,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PointsCalculatorController;
 use App\Http\Controllers\DetectController;
 use App\Http\Controllers\LiveDetectionController;
+use App\Http\Controllers\ElectricTimeController;
 
 
  
@@ -82,3 +83,4 @@ Route::post('/detect_video', [DetectController::class, 'detectVideo']);
 
 Route::post('/livedetect', [LiveDetectionController::class, 'runScript']);
 
+Route::post('/start', [ElectricTimeController::class, 'start']);

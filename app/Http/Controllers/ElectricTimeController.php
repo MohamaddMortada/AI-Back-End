@@ -36,12 +36,24 @@ class ElectricTimeController extends Controller
     public function start(Request $request)
     {
         $session = ElectricTime::where('sync_key', $request->sync_key)->first();
-
+    
         if ($session) {
-            $session->update(['start_time' => now()]);
-            return response()->json(['message' => 'Start time recorded'], 200);
+            $startTime = now();
+            
+            $session->update(['start_time' => $startTime]);
+    
+            $minutes = $startTime->minute;
+            $seconds = $startTime->second;
+            $microseconds = $startTime->microsecond; 
+    
+            return response()->json([
+                'minutes' => $minutes,
+                'seconds' => $seconds,
+                'microseconds' => $microseconds,
+            ], 200);
         }
-
+    
         return response()->json(['error' => 'Invalid sync key'], 400);
     }
+    
 }
