@@ -37,13 +37,15 @@ class PredictionController extends Controller
         $validatedData = $request->validate([
             'score' => 'required|string|max:255',
             'confidence' => 'required|integer',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
+            'list_of_data' => 'sometimes|array',
         ]);
 
         $prediction = Prediction::create([
             'score' => $validatedData['score'],
             'confidence' => $validatedData['confidence'],
             'user_id' => $validatedData['user_id'],
+            'list_of_data' => $validatedData['list_of_data'] ?? [],
         ]);
         if(!$prediction)   
             return response()->json(['message' => 'Error while creating prediction'], 500);
@@ -58,7 +60,8 @@ class PredictionController extends Controller
         $request->validate([
             'score' => 'sometimes|required|string|max:255',
             'confidence' => 'sometimes|required|integer',
-            'user_id' => 'required|exists:users,id'
+            'user_id' => 'required|exists:users,id',
+            'list_of_data' => 'sometimes|array',
         ]);
 
         $prediction = Prediction::find($id);
@@ -69,9 +72,10 @@ class PredictionController extends Controller
             ], 404);
         }
 
-        $prediction->score = $request->input('score');
-        $prediction->confidence = $request->input('confidence');
-        $prediction->user_id = $request->input('user_id');
+        $prediction->score = $validatedData['score'] ?? $prediction->score;
+        $prediction->confidence = $validatedData['confidence'] ?? $prediction->confidence;
+        $prediction->user_id = $validatedData['user_id'] ?? $prediction->user_id;
+        $prediction->list_of_data = $validatedData['list_of_data'] ?? $prediction->list_of_data;
 
         $prediction->save();
 
