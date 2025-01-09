@@ -9,5 +9,8 @@ class Prediction extends Model
 {
     use HasFactory;
     protected $table = 'predictions';
-    protected $fillable = ['score','confidence','user_id'];
+    protected $fillable = ['score','confidence','list_of_data','user_id'];
+    protected $casts = [
+        'list_of_strings' => 'array', 
+    ];
 }
