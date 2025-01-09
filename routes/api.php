@@ -14,6 +14,7 @@ use App\Http\Controllers\PointsCalculatorController;
 use App\Http\Controllers\DetectController;
 use App\Http\Controllers\LiveDetectionController;
 use App\Http\Controllers\ElectricTimeController;
+use App\Http\Controllers\ChatbotController;
 
 
  
@@ -85,3 +86,5 @@ Route::post('/livedetect', [LiveDetectionController::class, 'runScript']);
 
 Route::post('/start', [ElectricTimeController::class, 'start']);
 Route::post('/stop', [ElectricTimeController::class, 'stop']);
+
+Route::post('/chatbot', [ChatbotController::class, 'handleMessage']);
