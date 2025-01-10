@@ -78,4 +78,27 @@ class ResultController extends Controller
             'message' => 'Result deleted successfully',
         ], 200);
     }
+
+    public function getResultsByUserId(Request $request)
+{
+    $validatedData = $request->validate([
+        'user_id' => 'required|exists:users,id', 
+    ]);
+
+    $userId = $validatedData['user_id'];
+
+    $results = Result::where('user_id', $userId)->get();
+
+    if ($results->isEmpty()) {
+        return response()->json([
+            'message' => 'No results found for the given user.',
+        ], 404);
+    }
+
+    return response()->json([
+        'message' => 'Results fetched successfully.',
+        'results' => $results,
+    ], 200);
+}
+
 }

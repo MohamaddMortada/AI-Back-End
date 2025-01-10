@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Prediction;
+use Illuminate\Support\Facades\Http;
+use OpenAI;
 
 class PredictionController extends Controller
 {
@@ -101,54 +103,31 @@ class PredictionController extends Controller
         ], 200);  
     }
 
-    public function AIPredict(Request $request)
-    {
-        $validatedData = $request->validate([
-            'event' => 'required|string|max:255',
-            'results' => 'required|array',
-        ]);
+    public function AIPredict(Request $request) {
+    $event = $request->input('event');
+    $results = $request->input('results');
 
-        $event = $validatedData['event'];
-        $results = $validatedData['results'];
+    $prompt = "Predict the best performance for the event: $event based on the following results: " . implode(", ", $results) .", the response should be just the value, dont use words or explain just the returned time";
 
-        $prompt = $this->generatePrompt($event, $results);
+    try {
 
-        try {
-            $response = $this->callOpenAI($prompt);
-            $prediction = $response['choices'][0]['text'] ?? 'Unable to generate prediction';
-
-            return response()->json([
-                'prediction' => $prediction
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Error while contacting OpenAI: ' . $e->getMessage()
-            ], 500);
-        }
-    }
-
-    private function generatePrompt($event, $results)
-    {
-        $resultsText = implode(", ", $results);
-        return "Given the following training results: $resultsText, predict the performance for the $event event, the output must be just the prediction.";
-    }
-
-    private function callOpenAI($prompt)
-    {
         $client = OpenAI::client(env('OPENAI_API_KEY'));
-
         $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo', 
+            'model' => 'gpt-3.5-turbo',
             'messages' => [
-                ['role' => 'system', 'content' => 'You are a helpful assistant.'],
-                ['role' => 'user', 'content' => $prompt]
+                ['role' => 'system', 'content' => 'You are a helpful athletic coach who predicts sports performance based on training results.'],
+                ['role' => 'user', 'content' => $prompt],
             ],
-            'max_tokens' => 100,
-            'temperature' => 0.7, 
         ]);
 
-        return $response['choices'][0]['message']['content'] ?? 'Unable to generate prediction';
+        $prediction = $response->choices[0]->message->content;
+
+        return response()->json(['prediction' => $prediction]);
+
+    } catch (\Exception $e) {
+        \Log::error('OpenAI API error: ' . $e->getMessage());
+        return response()->json(['prediction' => 'Unable to generate prediction'], 500);
     }
+}
 
 }

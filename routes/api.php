@@ -96,3 +96,9 @@ Route::get('/results/{id}', [ResultController::class, 'getResult']);
 Route::post('/results', [ResultController::class, 'setResult']);
 Route::put('/results/{id}', [ResultController::class, 'updateResult']);
 Route::delete('/results/{id}', [ResultController::class, 'deleteResult']);
+Route::post('/getresult', [ResultController::class, 'getResultsByUserId']);
+
+
+Route::post('/aipredict', [PredictionController::class, 'AIPredict']);
+
+
