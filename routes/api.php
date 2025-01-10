@@ -15,6 +15,8 @@ use App\Http\Controllers\DetectController;
 use App\Http\Controllers\LiveDetectionController;
 use App\Http\Controllers\ElectricTimeController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\ResultController;
+
 
 
  
@@ -88,3 +90,9 @@ Route::post('/start', [ElectricTimeController::class, 'start']);
 Route::post('/stop', [ElectricTimeController::class, 'stop']);
 
 Route::post('/chatbot', [ChatbotController::class, 'handleMessage']);
+
+Route::get('/results', [ResultController::class, 'getResults']);
+Route::get('/results/{id}', [ResultController::class, 'getResult']);
+Route::post('/results', [ResultController::class, 'setResult']);
+Route::put('/results/{id}', [ResultController::class, 'updateResult']);
+Route::delete('/results/{id}', [ResultController::class, 'deleteResult']);
