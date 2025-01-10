@@ -27,4 +27,17 @@ class ResultController extends Controller
             'result' => $result,
         ], 200);
     }
+    public function setResult(Request $request) {
+        $validatedData = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'result' => 'required|string|max:255',
+        ]);
+
+        $result = Result::create($validatedData);
+
+        return response()->json([
+            'message' => 'Result created successfully',
+            'result' => $result,
+        ], 201);
+    }
 }
