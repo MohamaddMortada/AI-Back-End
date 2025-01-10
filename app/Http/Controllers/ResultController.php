@@ -62,4 +62,20 @@ class ResultController extends Controller
             'result' => $result,
         ], 200);
     }
+
+    public function deleteResult($id) {
+        $result = Result::find($id);
+
+        if (!$result) {
+            return response()->json([
+                'message' => 'Result not found',
+            ], 404);
+        }
+
+        $result->delete();
+
+        return response()->json([
+            'message' => 'Result deleted successfully',
+        ], 200);
+    }
 }
