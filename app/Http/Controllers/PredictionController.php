@@ -134,4 +134,21 @@ class PredictionController extends Controller
         return "Given the following training results: $resultsText, predict the performance for the $event event, the output must be just the prediction.";
     }
 
+    private function callOpenAI($prompt)
+    {
+        $client = OpenAI::client(env('OPENAI_API_KEY'));
+
+        $response = $client->chat()->create([
+            'model' => 'gpt-3.5-turbo', 
+            'messages' => [
+                ['role' => 'system', 'content' => 'You are a helpful assistant.'],
+                ['role' => 'user', 'content' => $prompt]
+            ],
+            'max_tokens' => 100,
+            'temperature' => 0.7, 
+        ]);
+
+        return $response['choices'][0]['message']['content'] ?? 'Unable to generate prediction';
+    }
+
 }
