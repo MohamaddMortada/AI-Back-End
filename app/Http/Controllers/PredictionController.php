@@ -128,4 +128,10 @@ class PredictionController extends Controller
         }
     }
 
+    private function generatePrompt($event, $results)
+    {
+        $resultsText = implode(", ", $results);
+        return "Given the following training results: $resultsText, predict the performance for the $event event, the output must be just the prediction.";
+    }
+
 }
