@@ -100,4 +100,32 @@ class PredictionController extends Controller
             'message' => 'prediction deleted successfully'
         ], 200);  
     }
+
+    public function AIPredict(Request $request)
+    {
+        $validatedData = $request->validate([
+            'event' => 'required|string|max:255',
+            'results' => 'required|array',
+        ]);
+
+        $event = $validatedData['event'];
+        $results = $validatedData['results'];
+
+        $prompt = $this->generatePrompt($event, $results);
+
+        try {
+            $response = $this->callOpenAI($prompt);
+            $prediction = $response['choices'][0]['text'] ?? 'Unable to generate prediction';
+
+            return response()->json([
+                'prediction' => $prediction
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error while contacting OpenAI: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 }
