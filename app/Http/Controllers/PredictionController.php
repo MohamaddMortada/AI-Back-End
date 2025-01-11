@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Prediction;
+use App\Models\Dashboard;
 use Illuminate\Support\Facades\Http;
 use OpenAI;
 
@@ -121,8 +122,23 @@ class PredictionController extends Controller
         ]);
 
         $prediction = $response->choices[0]->message->content;
-
-        return response()->json(['prediction' => $prediction]);
+        $dashboard = Dashboard::firstOrCreate(
+            ['id' => 1], 
+            [
+                'predictions' => 0,
+                'chatbot' => 0,
+                'calculating' => 0,
+                'photo_finish' => 0,
+                'detecting' => 0,
+                'added_results' => 0,
+            ]
+        );
+    
+        $dashboard->increment('predictions');
+        return response()->json([
+            'prediction' => $prediction,
+            'predictions' => $dashboard->predictions
+        ]);
 
     } catch (\Exception $e) {
         \Log::error('OpenAI API error: ' . $e->getMessage());
