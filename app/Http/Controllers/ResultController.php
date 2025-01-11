@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Result;
+use App\Models\Dashboard;
 use Illuminate\Http\Request;
 
 class ResultController extends Controller
@@ -35,9 +36,24 @@ class ResultController extends Controller
 
         $result = Result::create($validatedData);
 
+        $dashboard = Dashboard::firstOrCreate(
+            ['id' => 1], 
+            [
+                'predictions' => 0,
+                'chatbot' => 0,
+                'calculating' => 0,
+                'photo_finish' => 0,
+                'detecting' => 0,
+                'added_results' => 0,
+            ]
+        );
+    
+        $dashboard->increment('added_results');
+
         return response()->json([
             'message' => 'Result created successfully',
             'result' => $result,
+            'added_results' => $dashboard->added_results,
         ], 201);
     }
 
