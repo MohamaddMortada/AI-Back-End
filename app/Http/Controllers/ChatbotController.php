@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Dashboard;
 use OpenAI;
 
 class ChatbotController extends Controller
@@ -20,6 +21,23 @@ class ChatbotController extends Controller
             ],
         ]);
 
-        return response()->json(['response' => $response->choices[0]->message->content]);
+        $dashboard = Dashboard::firstOrCreate(
+            ['id' => 1], 
+            [
+                'predictions' => 0,
+                'chatbot' => 0,
+                'calculating' => 0,
+                'photo_finish' => 0,
+                'detecting' => 0,
+                'added_results' => 0,
+            ]
+        );
+
+        $dashboard->increment('chatbot');
+
+        return response()->json([
+            'response' => $response->choices[0]->message->content,
+            'ChatBot' => $dashboard->chatbot,
+        ]);
     }
 }
