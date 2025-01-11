@@ -16,10 +16,8 @@ use App\Http\Controllers\LiveDetectionController;
 use App\Http\Controllers\ElectricTimeController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\ResultController;
+use App\Http\Controllers\DashboardController;
 
-
-
- 
 Route::group([
     'prefix' => 'auth'
 ], function () {
@@ -100,5 +98,8 @@ Route::post('/getresult', [ResultController::class, 'getResultsByUserId']);
 
 
 Route::post('/aipredict', [PredictionController::class, 'AIPredict']);
+
+Route::get('/getDashboard', [DashboardController::class, 'getDashboardData']);
+
 
 
