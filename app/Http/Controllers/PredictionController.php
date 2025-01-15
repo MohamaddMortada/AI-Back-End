@@ -87,63 +87,54 @@ class PredictionController extends Controller
             'prediction' => $prediction
         ], 200);  
     }
-    public function deletePrediction($id)
-    {
-        $prediction = Prediction::find($id);
-
-        if (!$prediction) {
-            return response()->json([
-                'message' => 'prediction not found'
-            ], 404); 
-        }
-
-        $prediction->delete();
-        
-        return response()->json([
-            'message' => 'prediction deleted successfully'
-        ], 200);  
-    }
-
     public function AIPredict(Request $request) {
-    $event = $request->input('event');
-    $results = $request->input('results');
-
-    $prompt = "Predict the best performance for the event: $event based on the following results: " . implode(", ", $results) .", the response should be just the value, dont use words or explain just the returned time";
-
-    try {
-
-        $client = OpenAI::client(env('OPENAI_API_KEY'));
-        $response = $client->chat()->create([
-            'model' => 'gpt-3.5-turbo',
-            'messages' => [
-                ['role' => 'system', 'content' => 'You are a helpful athletic coach who predicts sports performance based on training results.'],
-                ['role' => 'user', 'content' => $prompt],
-            ],
-        ]);
-
-        $prediction = $response->choices[0]->message->content;
-        $dashboard = Dashboard::firstOrCreate(
-            ['id' => 1], 
-            [
-                'predictions' => 0,
-                'chatbot' => 0,
-                'calculating' => 0,
-                'photo_finish' => 0,
-                'detecting' => 0,
-                'added_results' => 0,
-            ]
-        );
+        $event = $request->input('event');
+        $results = $request->input('results');
     
-        $dashboard->increment('predictions');
-        return response()->json([
-            'prediction' => $prediction,
-            'predictions' => $dashboard->predictions
-        ]);
-
-    } catch (\Exception $e) {
-        \Log::error('OpenAI API error: ' . $e->getMessage());
-        return response()->json(['prediction' => 'Unable to generate prediction'], 500);
+        if (empty($event)) {
+            return response()->json(['error' => 'Event is required'], 400);
+        }
+    
+        if (!is_array($results) || empty($results)) {
+            return response()->json(['error' => 'Results must be a non-empty array'], 400);
+        }
+    
+        $prompt = "Predict the best performance for the event: $event based on the following results: " . implode(", ", $results) . ", the response should be just the value, don't use words or explain, just the returned time";
+    
+        try {
+            $client = OpenAI::client(env('OPENAI_API_KEY'));
+            $response = $client->chat()->create([
+                'model' => 'gpt-3.5-turbo',
+                'messages' => [
+                    ['role' => 'system', 'content' => 'You are a helpful athletic coach who predicts sports performance based on training results.'],
+                    ['role' => 'user', 'content' => $prompt],
+                ],
+            ]);
+    
+            $prediction = trim($response->choices[0]->message->content);
+            $dashboard = Dashboard::firstOrCreate(
+                ['id' => 1], 
+                [
+                    'predictions' => 0,
+                    'chatbot' => 0,
+                    'calculating' => 0,
+                    'photo_finish' => 0,
+                    'detecting' => 0,
+                    'added_results' => 0,
+                ]
+            );
+    
+            $dashboard->increment('predictions');
+            return response()->json([
+                'prediction' => $prediction,
+                'predictions' => $dashboard->predictions,
+            ]);
+    
+        } catch (\Exception $e) {
+            \Log::error('OpenAI API error: ' . $e->getMessage());
+            return response()->json(['error' => 'Unable to generate prediction'], 500);
+        }
     }
-}
+    
 
 }
