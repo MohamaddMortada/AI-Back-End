@@ -77,4 +77,18 @@ class ElectricTimeController extends Controller
     return response()->json(['message' => 'Fire timestamp updated successfully'], 200);
     }
 
+    public function getFireTimestamp(Request $request) {
+        $validated = $request->validate([
+            'sync_key' => 'required|string',
+        ]);
+
+        $electricTime = ElectricTime::where('sync_key', $validated['sync_key'])->first();
+
+        if (!$electricTime) {
+            return response()->json(['error' => 'Sync key not found'], 404);
+        }
+
+        return response()->json(['fire_timestamp' => $electricTime->startTime], 200);
+    }
+
 }
