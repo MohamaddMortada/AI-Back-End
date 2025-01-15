@@ -58,44 +58,23 @@ class ElectricTimeController extends Controller
         return response()->json(['error' => 'Invalid sync key'], 400);
     }
 
-    public function stop(Request $request)
-{
-    $session = ElectricTime::where('sync_key', $request->sync_key)->first();
+    public function stop(Request $request) {
 
-    if ($session) {
-        $stopTime = now();  
-        
-        $session->update(['stop_time' => $stopTime]);
-        
-        $startTime = \Carbon\Carbon::parse($session->start_time); 
+    $validated = $request->validate([
+        'sync_key' => 'required|string',
+        'fire_timestamp' => 'required|date_format:Y-m-d H:i:s.u', 
+    ]);
 
-        $stopMinutes = $stopTime->minute;
-        $stopSeconds = $stopTime->second;
-        $stopMicroseconds = $stopTime->microsecond;
+    $electricTime = ElectricTime::where('sync_key', $validated['sync_key'])->first();
 
-        $stopInSeconds = ($stopMinutes * 60) + $stopSeconds + ($stopMicroseconds / 1000000);
-
-        $startMinutes = $startTime->minute;
-        $startSeconds = $startTime->second;
-        $startMicroseconds = $startTime->microsecond;
-
-        $startInSeconds = ($startMinutes * 60) + $startSeconds + ($startMicroseconds / 1000000);
-
-        $diffInSeconds = $stopInSeconds - $startInSeconds;
-
-        return response()->json([
-            'startmin' => $startMinutes,
-            'startsec' => $startSeconds,
-            'startmicro' => $startMicroseconds,
-            'stopmin' => $stopMinutes,
-            'stopsec' => $stopSeconds,
-            'stopmicro' => $stopMicroseconds,
-            'diff' => $diffInSeconds
-        ], 200);
+    if (!$electricTime) {
+        return response()->json(['error' => 'Sync key not found'], 404);
     }
 
-    return response()->json(['error' => 'Invalid sync key'], 400);
-}
+    $electricTime->startTime = Carbon::parse($validated['fire_timestamp']);
+    $electricTime->save(); 
 
+    return response()->json(['message' => 'Fire timestamp updated successfully'], 200);
+    }
 
 }
