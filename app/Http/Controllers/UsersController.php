@@ -105,4 +105,22 @@ class UsersController extends Controller
             'message' => 'User deleted successfully'
         ], 200);  
     }
+
+    public function getUserIdFromEmail(Request $request) {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            return response()->json([
+                'userId' => $user->id
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'User not found'
+            ], 404);
+        }
+    }
 }
