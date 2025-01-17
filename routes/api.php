@@ -39,6 +39,8 @@ Route::get('/users/{id}', [UsersController::class,'getUser']);
 Route::post('/users', [UsersController::class,'setUser']);
 Route::put('/users/{id}', [UsersController::class, 'updateUser']);
 Route::delete('/users/{id}', [UsersController::class, 'deleteUser']);
+Route::post('/getuser', [UsersController::class,'getUserIdFromEmail']);
+
 
 Route::get('/event', [EventController::class,'getEvents']);
 Route::get('/event/{id}', [EventController::class,'getEvent']);
@@ -100,6 +102,9 @@ Route::post('/getresult', [ResultController::class, 'getResultsByUserId']);
 Route::post('/aipredict', [PredictionController::class, 'AIPredict']);
 
 Route::get('/getDashboard', [DashboardController::class, 'getDashboardData']);
+Route::post('/generate-key', [ElectricTimeController::class, 'generateKey']);
+Route::post('/validate-key', [ElectricTimeController::class, 'validateKey']);
+Route::post('/getfiretimestamp', [ElectricTimeController::class, 'getFireTimestamp']);
 
 
 
